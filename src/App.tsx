@@ -1,9 +1,9 @@
-import ProjectPage from "./projects/ProjectPage";
+import ProjectsPage from "./projects/ProjectsPage";
 
 export default function App() {
   return (
     <div className="container">
-      <ProjectPage />
+      <ProjectsPage />
     </div>
   );
 }
