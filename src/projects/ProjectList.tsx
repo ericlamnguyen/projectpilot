@@ -20,7 +20,7 @@ export default function ProjectList({ projects, onSave }: ProjectListProps) {
     setProjectBeingEdited({});
   };
 
-  const item = projects.map((project) => (
+  const items = projects.map((project) => (
     <div key={project.id} className="cols-sm">
       {project === projectBeingEdited ? (
         <ProjectForm onSave={onSave} onCancel={cancelEdit} />
@@ -30,5 +30,5 @@ export default function ProjectList({ projects, onSave }: ProjectListProps) {
     </div>
   ));
 
-  return <div className="row">{item}</div>;
+  return <div className="row">{items}</div>;
 }
