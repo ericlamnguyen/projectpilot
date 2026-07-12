@@ -23,7 +23,7 @@ export default function ProjectList({ projects, onSave }: ProjectListProps) {
   const items = projects.map((project) => (
     <div key={project.id} className="cols-sm">
       {project === projectBeingEdited ? (
-        <ProjectForm onSave={onSave} onCancel={cancelEdit} />
+        <ProjectForm project={project} onSave={onSave} onCancel={cancelEdit} />
       ) : (
         <ProjectCard project={project} onEdit={handleEdit} />
       )}
