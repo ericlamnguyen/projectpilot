@@ -40,10 +40,18 @@ export default function ProjectsPage() {
 
   // Function to handle saving a project after editing
   const saveProject = (project: Project) => {
-    const updatedProjects = projects.map((p: Project) =>
-      p.id === project.id ? project : p,
-    );
-    setProjects(updatedProjects);
+    projectAPI
+      .put(project)
+      .then((updatedProject) => {
+        setProjects((prevProjects) =>
+          prevProjects.map((p) =>
+            p.id === updatedProject.id ? updatedProject : p,
+          ),
+        );
+      })
+      .catch((err) => {
+        setError(err.message);
+      });
   };
 
   return (

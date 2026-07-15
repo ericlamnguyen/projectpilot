@@ -49,6 +49,7 @@ function convertToProjectModel(item: Partial<Project>): Project {
 }
 
 const projectAPI = {
+  // Fetch a list of projects with optional pagination parameters
   get(page = 1, limit = 20) {
     return fetch(`${url}?_page=${page}&_limit=${limit}&_sort=name`)
       .then(delay(0)) // Simulate server delay for demo purposes, to remove eventually
@@ -59,6 +60,27 @@ const projectAPI = {
         console.log("log client error " + error);
         throw new Error(
           "There was an error retrieving the projects. Please try again.",
+        );
+      });
+  },
+
+  // Update an existing project
+  put(project: Project) {
+    const putUrl = `${url}/${project.id}`;
+    return fetch(putUrl, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(project),
+    })
+      .then(checkStatus)
+      .then(parseJSON)
+      .then(convertToProjectModel)
+      .catch((error: TypeError) => {
+        console.log("log client error " + error);
+        throw new Error(
+          "There was an error updating the project. Please try again.",
         );
       });
   },
