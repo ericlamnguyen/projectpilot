@@ -48,11 +48,13 @@ function convertToProjectModel(item: Partial<Project>): Project {
   return new Project(item);
 }
 
+const mockDelay = 2000; // Mock API call 2 seconds for testing
+
 const projectAPI = {
   // Fetch a list of projects with optional pagination parameters
   get(page = 1, limit = 20) {
     return fetch(`${url}?_page=${page}&_limit=${limit}&_sort=name`)
-      .then(delay(0)) // Simulate server delay for demo purposes, to remove eventually
+      .then(delay(mockDelay)) // Simulate server delay for demo purposes, to remove eventually
       .then(checkStatus)
       .then(parseJSON)
       .then(convertToProjectModels)
