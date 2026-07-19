@@ -5,10 +5,9 @@ import ProjectForm from "./ProjectForm";
 
 interface ProjectListProps {
   projects: Project[];
-  onSave: (project: Project) => void;
 }
 
-export default function ProjectList({ projects, onSave }: ProjectListProps) {
+export default function ProjectList({ projects }: ProjectListProps) {
   const [projectBeingEdited, setProjectBeingEdited] = useState({});
 
   const handleEdit = (project: Project) => {
@@ -23,7 +22,7 @@ export default function ProjectList({ projects, onSave }: ProjectListProps) {
   const items = projects.map((project) => (
     <div key={project.id} className="cols-sm">
       {project === projectBeingEdited ? (
-        <ProjectForm project={project} onSave={onSave} onCancel={cancelEdit} />
+        <ProjectForm project={project} onCancel={cancelEdit} />
       ) : (
         <ProjectCard project={project} onEdit={handleEdit} />
       )}

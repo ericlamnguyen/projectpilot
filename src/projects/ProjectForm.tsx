@@ -1,9 +1,9 @@
 import { useState, type SyntheticEvent } from "react";
 import { Project } from "./Project";
+import { useSaveProject } from "./projectHooks";
 
 interface ProjectFormProps {
   project: Project;
-  onSave: (project: Project) => void;
   onCancel: () => void;
 }
 
@@ -11,7 +11,6 @@ export default function ProjectForm({
   // Object Destructuring with Renaming: rename the `project` prop to `initialProject`
   // to avoid naming conflicts with the state variable from the useState hook.
   project: initialProject,
-  onSave,
   onCancel,
 }: ProjectFormProps) {
   const [project, setProject] = useState(initialProject);
@@ -20,15 +19,18 @@ export default function ProjectForm({
     description: "",
     budget: "",
   });
+  const { mutate: saveProject, isPending } = useSaveProject();
 
+  // Event handler for form submission
   const handleSubmit = (event: SyntheticEvent) => {
     event.preventDefault();
     if (!isValid()) {
       return;
     }
-    onSave(project);
+    saveProject(project);
   };
 
+  // Event handler for input changes
   const handleChange = (
     event: SyntheticEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
@@ -60,6 +62,7 @@ export default function ProjectForm({
     setErrors(() => validate(updatedProject));
   };
 
+  // Validation function to check the project fields and return an object with error messages
   function validate(project: Project) {
     const errors = { name: "", description: "", budget: "" };
     if (project.name.length === 0) {
@@ -77,6 +80,7 @@ export default function ProjectForm({
     return errors;
   }
 
+  // Function to check if the form is valid based on the errors object
   function isValid() {
     return (
       errors.name.length === 0 &&
@@ -87,6 +91,7 @@ export default function ProjectForm({
 
   return (
     <form className="input-group vertical" onSubmit={handleSubmit}>
+      {isPending && <span className="toast">Saving...</span>}
       <label htmlFor="name">Project Name</label>
       <input
         type="text"
