@@ -8,5 +8,6 @@ git clone https://github.com/ericlamnguyen/projectpilot_backend.git
 
 ```bash
 npm install -g serve
+npm install
 npm run build
 serve -s dist
